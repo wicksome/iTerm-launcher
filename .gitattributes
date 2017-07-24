@@ -1,2 +1,2 @@
-*.scpt diff=scpt
 *.scpt binary
+*.scpt diff=scpt
