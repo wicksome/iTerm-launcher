@@ -1,0 +1,4 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+
+osascript ./run-example.scpt $1 $2
