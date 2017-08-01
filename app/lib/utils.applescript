@@ -1,3 +1,4 @@
+#! /usr/bin/osascript
 --------------------------------------------------------------------------------
 -- Util library
 --------------------------------------------------------------------------------
@@ -48,7 +49,7 @@ end isRunningApplication
 on readFile(theFile)
 	-- Convert the file to a string
 	set theFile to theFile as string
-	
+
 	-- Read the file and return its contents
 	return read file theFile
 end readFile

@@ -1,13 +1,14 @@
+#! /usr/bin/osascript
 on run argv
 	-- get current path for load script.
 	tell application "Finder"
-		set currentPath to container of (path to me) as text
+		set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
 	end tell
-	set iterm to load script file (currentPath & "iterm2.scpt")
-	
+	set iterm to load script POSIX file (binPath & "iterm2.scpt")
+
 	-- set row, column
 	set itermDisplay to setRowColumn(argv)
-	
+
 	-- run
 	set ITERM_WINDOW to openIterm(row of itermDisplay, column of itermDisplay) of iterm
 	sendCommandToAllSessions(ITERM_WINDOW, "ls") of iterm
@@ -26,7 +27,8 @@ to setRowColumn(arg)
 		set row to 2
 		set column to 2
 	end if
-	log "set row: " & row & " / column: " & column
-	
+	log "[iterm-launcher] row: " & row
+	log "[iterm-launcher] column: " & column
+
 	return {row:row, column:column}
 end setRowColumn

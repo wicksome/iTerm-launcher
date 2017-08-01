@@ -9,7 +9,22 @@
 
 - https://www.iterm2.com/documentation-scripting.html
 
+## example
+
+```sh
+$ ./run-example 2 1
+Compiling /Users/yeongjun/git/iterm-launcher/app/lib/iterm2.applescript...
+Compiling /Users/yeongjun/git/iterm-launcher/app/lib/utils.applescript...
+[iterm-launcher] row: 2
+[iterm-launcher] column: 1
+```
+
 ## Usage
+
+- openIterm
+- sendCommandToAllSessions
+- sendCommandEachSessions
+- sendKeystroke
 
 ```applescript
 -- load iterm scpt

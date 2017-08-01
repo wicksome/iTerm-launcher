@@ -1,3 +1,4 @@
+#! /usr/bin/osascript
 --------------------------------------------------------------------------------
 -- Utils for iterm2
 -- @see https://www.iterm2.com/documentation-scripting.html
@@ -15,7 +16,7 @@ set iterm to openIterm(2, 2)
 @param column {int}
 @return created iterm's window
 *)
--- 
+--
 to openIterm(row, column)
 	local iterm
 	tell application "iTerm"
@@ -27,7 +28,7 @@ to openIterm(row, column)
 			set iterm to current window
 		end if
 		delay 1
-		
+
 		-- Split pane
 		tell current session of iterm
 			repeat (row) - 1 times
@@ -37,7 +38,7 @@ to openIterm(row, column)
 					end repeat
 				end tell
 			end repeat
-			
+
 			repeat (column) - 1 times
 				split vertically with default profile
 			end repeat
@@ -86,7 +87,7 @@ to sendCommandEachSessions(iterm, commands, prefix, postfix)
 			set index to 1
 			repeat with eachSession in sessions
 				tell eachSession
-					if (index ¡Â (count of commands)) then
+					if (index <= (count of commands)) then
 						write text prefix & item index of commands & postfix
 						set index to index + 1
 						delay 0.5
@@ -114,15 +115,15 @@ sendKeystroke("CMD-OPT-i")
 *)
 to sendKeystroke(keySetStr)
 	tell application "Finder"
-		set libPath to POSIX path of (container of (path to me) as text) & "lib/"
+		 set currentPath to (target of front Finder window) as text
 	end tell
-	set utils to load script POSIX file (libPath & "utils.scpt")
-	
+	set utils to load script file (currentPath & "utils.scpt")
+
 	local keySet
 	local funcKey
 	local basicKey
 	set funcKey to {}
-	
+
 	set keySet to split(keySetStr, "-") of utils
 	repeat with str in keySet
 		set str to str as string
@@ -138,6 +139,6 @@ to sendKeystroke(keySetStr)
 			set basicKey to str
 		end if
 	end repeat
-	
+
 	tell application "System Events" to keystroke basicKey using funcKey
 end sendKeystroke
