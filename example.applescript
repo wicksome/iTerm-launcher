@@ -8,7 +8,7 @@ on run argv
 	-- Set row, column
 	set itermDisplay to setRowColumn(argv)
 
-	-- Load script.
+	-- Load iTerm script.
 	tell application "Finder" to set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
 	set iterm to load script POSIX file (binPath & "iterm.scpt")
 	
