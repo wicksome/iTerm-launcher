@@ -73,7 +73,26 @@ to runCmdAllPanes(iterm, command)
 end runCmdAllPanes
 
 (*
-Run command to each pane.
+Run command to current active pane.
+
+<pre><code>
+runCmd(iterm, "pwd")
+</code></pre>
+
+@param iterm - iterm's window
+@param command - command for running in terminal
+*)
+to runCmd(iterm, command)
+    tell application "iTerm"
+        tell current session of iterm
+            write text command
+			delay 0.5
+        end tell
+    end tell
+end runCmd
+
+(*
+Run command to specific pane.
 
 <pre><code>
 runCmdPane(iterm, 1, "pwd")
@@ -92,6 +111,7 @@ to runCmdPane(iterm, paneId, command)
 				tell pane
 					if (index = paneId) then
 						write text command
+						delay 0.5
                         exit repeat
 					end if
 				end tell

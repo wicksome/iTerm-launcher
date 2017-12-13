@@ -2,18 +2,17 @@
 
 -- Main
 on run argv
-    -- Show version.
-    log "v" & VERSION of iterm
-
 	-- Set row, column
-	set itermDisplay to setRowColumn(argv)
+	set itermLayout to setRowColumn(argv)
 
 	-- Load iTerm script.
-	tell application "Finder" to set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
-	set iterm to load script POSIX file (binPath & "iterm.scpt")
+	tell application "Finder" to set currentPath to POSIX path of (container of (path to me) as text)
+	set iterm to load script POSIX file (currentPath & "../app/bin/iterm.scpt")
 	
     -- Run iTerm script.
-	set ITERM_WINDOW to newWindow(row of itermDisplay, column of itermDisplay) of iterm
+    log "v" & VERSION of iterm
+	set ITERM_WINDOW to newWindow(row of itermLayout, column of itermLayout) of iterm
+    runCmd(ITERM_WINDOW, "echo 'This is active pane current'") of iterm
 	runCmdAllPanes(ITERM_WINDOW, "echo 'all'") of iterm
 	runCmdPane(ITERM_WINDOW, 2, "echo 'This is second pane'") of iterm
     runCmdEachPanes(ITERM_WINDOW, [¬
@@ -36,8 +35,6 @@ to setRowColumn(arg)
 		set row to 2
 		set column to 2
 	end if
-	log "[iterm-launcher] row: " & row
-	log "[iterm-launcher] column: " & column
 
 	return {row:row, column:column}
 end setRowColumn
