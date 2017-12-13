@@ -2,19 +2,17 @@
 
 -- Main
 on run argv
-	-- get current path for load script.
-	tell application "Finder"
-		set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
-	end tell
-	set iterm to load script POSIX file (binPath & "iterm.scpt")
-
-    -- version
+    -- Show version.
     log "v" & VERSION of iterm
 
-	-- set row, column
+	-- Set row, column
 	set itermDisplay to setRowColumn(argv)
 
-	-- run
+	-- Load script.
+	tell application "Finder" to set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
+	set iterm to load script POSIX file (binPath & "iterm.scpt")
+	
+    -- Run iTerm script.
 	set ITERM_WINDOW to newWindow(row of itermDisplay, column of itermDisplay) of iterm
 	runCmdAllPanes(ITERM_WINDOW, "echo 'all'") of iterm
 	runCmdPane(ITERM_WINDOW, 2, "echo 'This is second pane'") of iterm
