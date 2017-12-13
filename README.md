@@ -2,6 +2,8 @@
 
 > iTerm helper using AppleScript.
 
+build env:
+
 - macOS: Sierra 10.12.6
 - iTerm2: Build 3.1.5
 
