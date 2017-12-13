@@ -7,16 +7,16 @@
 
 ## Demo
 
-![preview](./preview.gif)
+![preview](https://user-images.githubusercontent.com/5036939/33924248-91b0e8fc-e018-11e7-8c57-3207d94400f3.gif)
 
 ```sh
-./demo/run 2 3
+$ ./demo/run 2 3
 Compiling /Users/user/git/iTerm-launcher/app/lib/iterm.applescript...
 v2.0
 ```
 
 
-## Example
+## Example code
 
 ```applescript
 -- Load iTerm script.
