@@ -26,10 +26,12 @@ tell application "Finder" to set binPath to POSIX path of (container of (path to
 set iterm to load script file (currentPath & "iterm.scpt")
 
 -- Use iTerm script.
-set ITERM_WINDOW to newWindow(2, 2) of iterm -- row, column
+set ITERM_WINDOW to newWindow() of iterm -- row, column
 
 -- show version
 log VERSION of iterm
+-- Split pane
+splitPane(ITERM_WINDOW, 2, 2) of iterm
 -- run command to current pane
 runCmd(ITERM_WINDOW, "echo 'This is active pane current'") of iterm
 -- run command to all panes
@@ -48,14 +50,26 @@ sendKeystroke("CMD-OPT-i") of iterm
 
 ## Usage
 
-### `newWindow(row: int, column: int): windowId`
+### `newWindow(): windowId`
 
 Example:
 
 ```applescript
 tell application "Finder" to set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
 set iterm to load script file (currentPath & "iterm.scpt")
-set ITERM_WINDOW to newWindow(row, column) of iterm
+set ITERM_WINDOW to newWindow() of iterm
+```
+
+### `splitPane(windowId: int, row: int, column: int)`
+
+Example:
+
+```applescript
+tell application "Finder" to set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
+set iterm to load script file (currentPath & "iterm.scpt")
+set ITERM_WINDOW to newWindow() of iterm
+
+splitPane(ITERM_WINDOW, 2, 2) of iterm
 ```
 
 ### `runCmdAllPanes(windowId: int, command: String)`
@@ -65,7 +79,9 @@ Example:
 ```applescript
 tell application "Finder" to set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
 set iterm to load script file (currentPath & "iterm.scpt")
-set ITERM_WINDOW to newWindow(row, column) of iterm
+set ITERM_WINDOW to newWindow() of iterm
+splitPane(ITERM_WINDOW, 2, 2) of iterm
+
 runCmdAllPanes(ITERM_WINDOW, "ls -al") of iterm
 ```
 
@@ -76,7 +92,9 @@ Example:
 ```applescript
 tell application "Finder" to set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
 set iterm to load script file (currentPath & "iterm.scpt")
-set ITERM_WINDOW to newWindow(row, column) of iterm
+set ITERM_WINDOW to newWindow() of iterm
+splitPane(ITERM_WINDOW, 2, 2) of iterm
+
 runCmd(ITERM_WINDOW, "echo 'This is current active pane'") of iterm
 ```
 
@@ -88,7 +106,9 @@ Example:
 ```applescript
 tell application "Finder" to set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
 set iterm to load script file (currentPath & "iterm.scpt")
-set ITERM_WINDOW to newWindow(row, column) of iterm
+set ITERM_WINDOW to newWindow() of iterm
+splitPane(ITERM_WINDOW, 2, 2) of iterm
+
 runCmdPane(ITERM_WINDOW, 2, "echo 'This is second pane'") of iterm
 ```
 
@@ -99,7 +119,9 @@ Example:
 ```applescript
 tell application "Finder" to set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
 set iterm to load script file (currentPath & "iterm.scpt")
-set ITERM_WINDOW to newWindow(row, column) of iterm
+set ITERM_WINDOW to newWindow() of iterm
+splitPane(ITERM_WINDOW, 2, 2) of iterm
+
 runCmdEachPanes(ITERM_WINDOW, [¬
   "ls -al",¬
   "htop",¬
@@ -114,7 +136,9 @@ Example:
 ```applescript
 tell application "Finder" to set binPath to POSIX path of (container of (path to me) as text) & "app/bin/"
 set iterm to load script file (currentPath & "iterm.scpt")
-set ITERM_WINDOW to newWindow(row, column) of iterm
+set ITERM_WINDOW to newWindow() of iterm
+splitPane(ITERM_WINDOW, 2, 2) of iterm
+
 sendKeystroke("CMD-OPT-i") of iterm
 ```
 
