@@ -11,7 +11,8 @@ on run argv
 	
     -- Run iTerm script.
     log "v" & VERSION of iterm
-	set ITERM_WINDOW to newWindow(row of itermLayout, column of itermLayout) of iterm
+	set ITERM_WINDOW to newWindow() of iterm
+    splitPane(ITERM_WINDOW, row of itermLayout, column of itermLayout) of iterm
     runCmd(ITERM_WINDOW, "echo 'This is active pane current'") of iterm
 	runCmdAllPanes(ITERM_WINDOW, "echo 'all'") of iterm
 	runCmdPane(ITERM_WINDOW, 2, "echo 'This is second pane'") of iterm

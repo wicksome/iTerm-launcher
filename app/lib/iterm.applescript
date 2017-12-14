@@ -11,15 +11,12 @@ property VERSION : "2.0"
 Open and Split iterm.
 
 <pre><code>
-set iterm to newWindow(2, 2)
+set iterm to newWindow()
 </code></pre>
 
-@param row {int}
-@param column {int}
 @return created iterm's window
 *)
---
-to newWindow(row, column)
+to newWindow()
 	local iterm
 	tell application "iTerm"
 		-- Open iTerm
@@ -30,24 +27,35 @@ to newWindow(row, column)
 			set iterm to current window
 		end if
 		delay 1
-
-		-- Split pane
-		tell current session of iterm
-			repeat (row) - 1 times
-				tell (split horizontally with default profile)
-					repeat (column) - 1 times
-						split vertically with default profile
-					end repeat
-				end tell
-			end repeat
-
-			repeat (column) - 1 times
-				split vertically with default profile
-			end repeat
-		end tell
 	end tell
+
 	return iterm
 end openIterm
+
+(*
+Split pane.
+
+@param iterm - iterm's window
+@param row {int}
+@param column {int}
+*)
+to splitPane(iterm, row, column)
+    tell application "iTerm"
+        tell current session of iterm
+            repeat (row) - 1 times
+                tell (split horizontally with default profile)
+                    repeat (column) - 1 times
+                        split vertically with default profile
+                end repeat
+                end tell
+            end repeat
+
+            repeat (column) - 1 times
+                split vertically with default profile
+            end repeat
+        end tell
+    end tell
+end splitPane
 
 (*
 Run command to all panes.
