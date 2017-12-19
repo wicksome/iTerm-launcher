@@ -1,11 +1,11 @@
 #!/bin/bash
 cd "$(dirname "$0")"
 
-LIB_PATH="$(pwd)/lib"
+SRC_PATH="$(pwd)/src"
 BIN_PATH="$(pwd)/bin"
 
 # compile .applescript files: https://gist.github.com/prenagha/404284fee1b8ff86aec5
-find ${LIB_PATH} -type f -name '*.applescript' -print0 | while read -d '' -r APPLESCRIPT
+find ${SRC_PATH} -type f -name '*.applescript' -print0 | while read -d '' -r APPLESCRIPT
 do
     echo "Compiling $APPLESCRIPT..."
     SCPT="$BIN_PATH/$(basename ${APPLESCRIPT%.applescript}.scpt)"

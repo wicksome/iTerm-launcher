@@ -7,7 +7,7 @@ on run argv
 
 	-- Load iTerm script.
 	tell application "Finder" to set currentPath to POSIX path of (container of (path to me) as text)
-	set iterm to load script POSIX file (currentPath & "../app/bin/iterm.scpt")
+	set iterm to load script POSIX file (currentPath & "../../app/bin/iterm.scpt")
 	
     -- Run iTerm script.
     log "v" & VERSION of iterm

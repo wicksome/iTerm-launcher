@@ -1,6 +1,0 @@
-#!/bin/bash
-cd "$(dirname "$0")"
-../app/build
-
-osacompile -o ./example.scpt ./example.applescript
-osascript ./example.scpt $1 $2

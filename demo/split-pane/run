@@ -1,0 +1,9 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+../../app/build
+
+EXAMPLE_FILE="example"
+
+echo "Compiling $(pwd)/${EXAMPLE_FILE}.applescript..."
+osacompile -o ./${EXAMPLE_FILE}.scpt ./${EXAMPLE_FILE}.applescript
+osascript ./${EXAMPLE_FILE}.scpt $@

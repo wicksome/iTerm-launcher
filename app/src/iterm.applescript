@@ -1,5 +1,5 @@
 #! /usr/bin/osascript
-property VERSION : "2.1"
+property VERSION : "2.11"
 
 --------------------------------------------------------------------------------
 -- AppleScript for iterm2.
@@ -35,24 +35,38 @@ end openIterm
 (*
 Split pane.
 
-@param iterm - iterm's window
+@param iterm - iterm's window ID
 @param row {int}
 @param column {int}
 *)
 to splitPane(iterm, row, column)
     tell application "iTerm"
+        local currentSessions
+
+        -- split horizontally pane
         tell current session of iterm
             repeat (row) - 1 times
-                tell (split horizontally with default profile)
-                    repeat (column) - 1 times
-                        split vertically with default profile
-                end repeat
-                end tell
+                split horizontally with default profile
             end repeat
+        end tell
 
-            repeat (column) - 1 times
-                split vertically with default profile
+        delay 0.5
+
+        -- split vertically pane
+        tell current tab of iterm
+            set currentSessions to sessions of current tab of iterm
+            repeat with s in currentSessions
+                repeat (column - 1) times
+                    split vertically with default profile of s
+                end repeat
             end repeat
+        end tell
+
+        delay 0.5
+
+        -- select first pane
+        tell first session of current tab of iterm
+            select
         end tell
     end tell
 end splitPane
