@@ -43,11 +43,14 @@ to splitPane(iterm, row, column)
 	tell application "iTerm2"
 		local currentSessions
 
+		if (column > 6) then
+			log "The maximum column is 6 when using tmux and column size is 80."
+		end if
+
 		-- split horizontally pane
 		tell current session of iterm
 			repeat (row) - 1 times
 				split horizontally with default profile
-				delay 0.15
 			end repeat
 		end tell
 
@@ -59,7 +62,6 @@ to splitPane(iterm, row, column)
 			repeat with s in currentSessions
 				repeat (column - 1) times
 					split vertically with default profile of s
-					delay 0.15
 				end repeat
 			end repeat
 		end tell
