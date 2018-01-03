@@ -1,5 +1,5 @@
 #!/usr/bin/osascript
-property version : "2.11"
+property version : "2.12"
 
 --------------------------------------------------------------------------------
 -- AppleScript for iterm2.
