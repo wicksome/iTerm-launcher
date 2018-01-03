@@ -7,12 +7,12 @@ BIN_PATH="$(pwd)/bin"
 # compile .applescript files: https://gist.github.com/prenagha/404284fee1b8ff86aec5
 find ${SRC_PATH} -type f -name '*.applescript' -print0 | while read -d '' -r APPLESCRIPT
 do
-    echo "Compiling $APPLESCRIPT..."
+    echo "$(tput setaf 2)Compiling$(tput sgr0) $APPLESCRIPT..."
     SCPT="$BIN_PATH/$(basename ${APPLESCRIPT%.applescript}.scpt)"
     /usr/bin/osacompile -o "$SCPT" "$APPLESCRIPT"
     if [ $? -ne 0 ]
     then
-        "Error compiling $APPLESCRIPT" 1>$2
+        "Error compiling $APPLESCRIPT" 1>&2
         exit $?
     fi
 done

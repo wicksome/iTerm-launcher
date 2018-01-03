@@ -1,5 +1,5 @@
-#! /usr/bin/osascript
-property VERSION : "2.11"
+#!/usr/bin/osascript
+property version : "2.12"
 
 --------------------------------------------------------------------------------
 -- AppleScript for iterm2.
@@ -18,19 +18,19 @@ set iterm to newWindow()
 *)
 to newWindow()
 	local iterm
-	tell application "iTerm"
+	tell application "iTerm2"
 		-- Open iTerm
-		if application "iTerm" is running then
+		if application "iTerm2" is running then
 			set iterm to (create window with default profile)
 		else
-			activate application "iTerm"
+			activate application "iTerm2"
 			set iterm to current window
 		end if
 		delay 1
 	end tell
 
 	return iterm
-end openIterm
+end newWindow
 
 (*
 Split pane.
@@ -40,35 +40,43 @@ Split pane.
 @param column {int}
 *)
 to splitPane(iterm, row, column)
-    tell application "iTerm"
-        local currentSessions
+	tell application "iTerm2"
+		local currentSessions
+    
+        -- Show caution notification 
+		if (column > 6) then
+            display notification "bug when using tmux and column size if 80(#3)." ¬
+                with title "iTerm2 Script"¬
+                subtitle "The maximum column is 6."
+                -- sound name "Frog"
+		end if
 
-        -- split horizontally pane
-        tell current session of iterm
-            repeat (row) - 1 times
-                split horizontally with default profile
-            end repeat
-        end tell
+		-- split horizontally pane
+		tell current session of iterm
+			repeat (row) - 1 times
+				split horizontally with default profile
+			end repeat
+		end tell
 
-        delay 0.5
+		delay 0.5
 
-        -- split vertically pane
-        tell current tab of iterm
-            set currentSessions to sessions of current tab of iterm
-            repeat with s in currentSessions
-                repeat (column - 1) times
-                    split vertically with default profile of s
-                end repeat
-            end repeat
-        end tell
+		-- split vertically pane
+		tell current tab of iterm
+			set currentSessions to sessions of current tab of iterm
+			repeat with s in currentSessions
+				repeat (column - 1) times
+					split vertically with default profile of s
+				end repeat
+			end repeat
+		end tell
 
-        delay 0.5
+		delay 0.5
 
-        -- select first pane
-        tell first session of current tab of iterm
-            select
-        end tell
-    end tell
+		-- select first pane
+		tell first session of current tab of iterm
+			select
+		end tell
+	end tell
 end splitPane
 
 (*
@@ -82,7 +90,7 @@ runCmdAllPanes(iterm, "ls")
 @param command - command for running in terminal
 *)
 to runCmdAllPanes(iterm, command)
-	tell application "iTerm"
+	tell application "iTerm2"
 		tell current tab of iterm
 			repeat with pane in sessions
 				tell pane
@@ -105,12 +113,12 @@ runCmd(iterm, "pwd")
 @param command - command for running in terminal
 *)
 to runCmd(iterm, command)
-    tell application "iTerm"
-        tell current session of iterm
-            write text command
+	tell application "iTerm2"
+		tell current session of iterm
+			write text command
 			delay 0.5
-        end tell
-    end tell
+		end tell
+	end tell
 end runCmd
 
 (*
@@ -125,7 +133,7 @@ runCmdPane(iterm, 1, "pwd")
 @param command - command for running in terminal
 *)
 to runCmdPane(iterm, paneId, command)
-	tell application "iTerm"
+	tell application "iTerm2"
 		tell current tab of iterm
 			local index
 			set index to 1
@@ -134,14 +142,14 @@ to runCmdPane(iterm, paneId, command)
 					if (index = paneId) then
 						write text command
 						delay 0.5
-                        exit repeat
+						exit repeat
 					end if
 				end tell
 				set index to index + 1
 			end repeat
 		end tell
 	end tell
-end runCmdCurrentPane
+end runCmdPane
 
 (*
 Run command to each pane.
@@ -158,7 +166,7 @@ runCmdEachPanes(iterm, [¬
 @param commands - command's array for running to each pane.
 *)
 to runCmdEachPanes(iterm, commands)
-	tell application "iTerm"
+	tell application "iTerm2"
 		tell current tab of iterm
 			local index
 			set index to 1
@@ -172,7 +180,7 @@ to runCmdEachPanes(iterm, commands)
 				set index to index + 1
 			end repeat
 		end tell
-    end tell
+	end tell
 end runCmdEachPanes
 
 (*
@@ -231,7 +239,7 @@ to _utils_join(lst, separator)
 	set str to lst as string
 	set AppleScript's text item delimiters to ""
 	return str
-end join
+end _utils_join
 
 
 (*
@@ -244,7 +252,7 @@ to _utils_split(str, separator)
 	set someText to str's text items
 	set AppleScript's text item delimiters to {""} --> restore delimiters to default value
 	return someText
-end split
+end _utils_split
 
 --------------------------------------------------------------------------------
 -- [Deprecated] functions.
