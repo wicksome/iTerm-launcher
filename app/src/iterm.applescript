@@ -42,9 +42,13 @@ Split pane.
 to splitPane(iterm, row, column)
 	tell application "iTerm2"
 		local currentSessions
-
+    
+        -- Show caution notification 
 		if (column > 6) then
-			log "The maximum column is 6 when using tmux and column size is 80."
+            display notification "bug when using tmux and column size if 80(#3)." ¬
+                with title "iTerm2 Script"¬
+                subtitle "The maximum column is 6."
+                -- sound name "Frog"
 		end if
 
 		-- split horizontally pane
