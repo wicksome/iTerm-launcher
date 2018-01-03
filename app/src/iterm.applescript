@@ -47,6 +47,7 @@ to splitPane(iterm, row, column)
 		tell current session of iterm
 			repeat (row) - 1 times
 				split horizontally with default profile
+				delay 0.15
 			end repeat
 		end tell
 
@@ -58,6 +59,7 @@ to splitPane(iterm, row, column)
 			repeat with s in currentSessions
 				repeat (column - 1) times
 					split vertically with default profile of s
+					delay 0.15
 				end repeat
 			end repeat
 		end tell
